@@ -64,6 +64,7 @@ public class ListFragment extends Fragment {
 
         ListFragmentAdapter flAdapter;
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         getDisplayMetrics();
