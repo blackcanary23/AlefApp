@@ -7,16 +7,17 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity implements ListFragmentAdapter.ImageClicked {
 
+    private FragmentManager fMan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //DetailedFragment detailedFragment;
-        FragmentManager fMan = getSupportFragmentManager();
-
+        fMan = getSupportFragmentManager();
         ListFragment listFragment = new ListFragment();
+
         fMan.beginTransaction()
                 .add(R.id.container, listFragment, "listFrag")
                 .addToBackStack(null)
@@ -24,7 +25,17 @@ public class MainActivity extends AppCompatActivity implements ListFragmentAdapt
     }
 
     @Override
-    public void onImageClicked(String image) {
+    public void onImageClicked(String url) {
 
+        DetailedFragment detailedFragment = new DetailedFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("image", url);
+        detailedFragment.setArguments(bundle);
+
+        fMan.beginTransaction()
+                .replace(R.id.container, detailedFragment, "detailFrag")
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
     }
 }

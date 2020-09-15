@@ -20,7 +20,7 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ListFragmentAdapte
 
     public interface ImageClicked {
 
-        void onImageClicked(String image);
+        void onImageClicked(String url);
     }
 
     public ListFragmentAdapter(Context context, ArrayList<String> imageList, int dpMetrics) {

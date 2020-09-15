@@ -1,8 +1,8 @@
 package com.example.alefapp;
 
-import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +29,9 @@ public class ListFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_list_adapter, container, false);
 
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        GetDataService service = RetrofitClientInstance
+                .getRetrofitInstance()
+                .create(GetDataService.class);
         Call<ArrayList<String>> call = service.getALLImages();
         call.enqueue(new Callback<ArrayList<String>>() {
             @Override
@@ -47,32 +49,15 @@ public class ListFragment extends Fragment {
         return view;
     }
 
-    /*void detectDeviceType() {
-
-        TelephonyManager manager = (TelephonyManager)getActivity()
-                .getSystemService(Context.TELEPHONY_SERVICE);
-
-        assert manager != null;
-        if (manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        }
-    }*/
-
     void generateDataList(ArrayList<String> imageList) {
 
         ListFragmentAdapter flAdapter;
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
-
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         getDisplayMetrics();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            flAdapter = new ListFragmentAdapter(getActivity(), imageList, dpWidth);
-        else
-            flAdapter = new ListFragmentAdapter(getActivity(), imageList, dpWidth);
 
+        flAdapter = new ListFragmentAdapter(getActivity(), imageList, dpWidth);
         recyclerView.setAdapter(flAdapter);
 
         final int spacing = getResources().getDimensionPixelSize(R.dimen.recycler_spacing) / 2;
@@ -80,9 +65,13 @@ public class ListFragment extends Fragment {
         recyclerView.setPadding(spacing, spacing, spacing, spacing);
         recyclerView.setClipToPadding(false);
         recyclerView.setClipChildren(false);
+
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            public void getItemOffsets(@NonNull Rect outRect,
+                                       @NonNull View view,
+                                       @NonNull RecyclerView parent,
+                                       @NonNull RecyclerView.State state) {
                 outRect.set(spacing, spacing, spacing, spacing);
             }
         });
