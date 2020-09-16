@@ -38,14 +38,12 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ListFragmentAdapte
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_list, parent, false);
 
-        return new ListFragmentAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ListFragmentAdapter.ViewHolder holder, int position) {
-
-        holder.itemView.setTag(imageList.get(position));
 
         Picasso.get().load(imageList.get(position))
                 .resize(dpMetrics, dpMetrics)
@@ -59,9 +57,9 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ListFragmentAdapte
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView image;
+        final ImageView image;
 
         ViewHolder(@NonNull View itemView) {
 
@@ -78,7 +76,6 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ListFragmentAdapte
 
                 }
             });
-
         }
     }
 }
